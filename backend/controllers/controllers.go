@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"context"
+	"fmt"
 	"hollamart/database"
 	"hollamart/models"
 	"log"
@@ -26,6 +27,17 @@ func HashPassword(password string) string {
 		log.Panic(err)
 	}
 	return string(bytes)
+}
+
+func VerifyPassword(userpassword string, givenpassword string) (bool, string) {
+	err := bcrypt.CompareHashAndPassword([]byte(givenpassword), []byte(userpassword))
+	valid := true
+	msg := ""
+	if err != nil {
+		msg = "Login Or Passowrd is Incorerct"
+		valid = false
+	}
+	return valid, msg
 }
 
 func SignUp() gin.HandlerFunc {
@@ -82,5 +94,34 @@ func SignUp() gin.HandlerFunc {
 		}
 		defer cancel()
 		c.JSON(http.StatusCreated, "Successfully Signed Up!!")
+	}
+}
+func Login() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+		defer cancel()
+		var user models.User
+		var founduser models.User
+		if err := c.BindJSON(&user); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err})
+			return
+		}
+		err := UserCollection.FindOne(ctx, bson.M{"email": user.Email}).Decode(&founduser)
+		defer cancel()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "login or password incorrect"})
+			return
+		}
+		PasswordIsValid, msg := VerifyPassword(*user.Password, *founduser.Password)
+		defer cancel()
+		if !PasswordIsValid {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+			fmt.Println(msg)
+			return
+		}
+
+		defer cancel()
+		c.IndentedJSON(200, founduser)
+
 	}
 }
