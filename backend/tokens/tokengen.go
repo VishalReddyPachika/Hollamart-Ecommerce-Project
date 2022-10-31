@@ -35,12 +35,12 @@ func TokenGenerator(email string, firstname string, lastname string, uid string)
 			ExpiresAt: time.Now().Local().Add(time.Hour * time.Duration(24)).Unix(),
 		},
 	}
-	
+
 	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte(SECRET_KEY))
 	if err != nil {
 		return "", err
 	}
-	
+
 	if err != nil {
 		log.Panicln(err)
 		return
