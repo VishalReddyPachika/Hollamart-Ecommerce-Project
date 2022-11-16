@@ -1,10 +1,11 @@
 package controllers
 
 import (
+	"backend/database"
+	"backend/models"
+	generate "backend/tokens"
 	"context"
 	"fmt"
-	"hollamart/database"
-	"hollamart/models"
 	"log"
 	"net/http"
 	"time"
@@ -40,6 +41,20 @@ func VerifyPassword(userpassword string, givenpassword string) (bool, string) {
 	return valid, msg
 }
 
+// This actually indicates that you may need to seperate your controller.go into seperate files in your controllers package.
+/**********************************************************************************************/
+
+//function to signup
+//accept a post request
+//POST Request
+//http://localhost:8000/users/signnup
+/*
+   "fisrt_name":"trail",
+   "last_name":"one",
+   "email":"xyz@gmail.com",
+   "phone":"1234567899",
+   "password":"123456"
+*/
 func SignUp() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
@@ -75,7 +90,8 @@ func SignUp() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Phone is already in use"})
 			return
 		}
-
+		// below makes a hash password
+		// the phone number exists or not. So I moved it down a bit.
 		password := HashPassword(*user.Password)
 		user.Password = &password
 
@@ -83,10 +99,12 @@ func SignUp() gin.HandlerFunc {
 		user.Updated_At, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 		user.ID = primitive.NewObjectID()
 		user.User_ID = user.ID.Hex()
-
+		token, _ := generate.TokenGenerator(*user.Email, *user.First_Name, *user.Last_Name, user.User_ID)
+		user.Token = &token
+		// user.Refresh_Token = &refreshtoken
 		user.UserCart = make([]models.ProductUser, 0)
 		user.Address_Details = make([]models.Address, 0)
-
+		// user.Order_Status = make([]models.Order, 0)
 		_, inserterr := UserCollection.InsertOne(ctx, user)
 		if inserterr != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "not created"})
@@ -119,13 +137,14 @@ func Login() gin.HandlerFunc {
 			fmt.Println(msg)
 			return
 		}
+		token, _ := generate.TokenGenerator(*founduser.Email, *founduser.First_Name, *founduser.Last_Name, founduser.User_ID)
 
+		generate.UpdateAllTokens(token, founduser.User_ID)
 		defer cancel()
 		c.IndentedJSON(200, founduser)
 
 	}
 }
-
 
 func ProductViewerAdmin() gin.HandlerFunc {
 	return func(c *gin.Context) {

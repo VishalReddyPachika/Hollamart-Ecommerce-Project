@@ -1,12 +1,11 @@
-
-
 package database
 
 import (
+	"backend/models"
 	"context"
-	"ecommerce/models"
 	"errors"
 	"log"
+
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
