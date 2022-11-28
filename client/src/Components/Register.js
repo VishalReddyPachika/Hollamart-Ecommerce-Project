@@ -144,7 +144,7 @@ function Register() {
           </div>
         </div>
       </div>
-      <div className="regfooter-page">Catch us on Social Media</div>
+      <div className="regfooter-page"></div>
     </div>
   );
 }
