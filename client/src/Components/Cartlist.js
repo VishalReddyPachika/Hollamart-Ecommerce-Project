@@ -5,6 +5,7 @@ import "./Cartlist.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faSignOut } from "@fortawesome/free-solid-svg-icons";
+import SearchBar from "./searchBar";
 
 // import Addresscomp from './Addresspopup'
 import Addresspopup from "./Addresspopup";
@@ -121,8 +122,10 @@ function Cartlist() {
               <div onClick={productviewPage} className="availableprod">
                 Products
               </div>
+
+              <SearchBar />
             </div>
-            <div className="faCartShoppingIcon">
+            <div className="faCartShoppingIcon1">
               <FontAwesomeIcon
                 icon={faSignOut}
                 size="3x"
@@ -145,36 +148,39 @@ function Cartlist() {
         </div>
       ) : (
         <div>
-        <div className="head-listcart">
-          <div className="title">
-            <div onClick={landingPage}>Hollamart</div>
-            <div onClick={productviewPage} className="availableprod">
-              Products
+          <div className="head-listcart">
+            <div className="title">
+              <div onClick={landingPage}>Hollamart</div>
+              <div onClick={productviewPage} className="availableprod">
+                Products
+              </div>
+            </div>
+            <div className="faCartShoppingIcon">
+              <FontAwesomeIcon
+                icon={faSignOut}
+                size="3x"
+                onClick={logoutUser}
+                className="faSignOut"
+              />
             </div>
           </div>
-          <div className="faCartShoppingIcon">
-            <FontAwesomeIcon
-              icon={faSignOut}
-              size="3x"
-              onClick={logoutUser}
-              className="faSignOut"
-            />
+
+          <div>
+            {cartProducts.map((cartprod) => {
+              return <Cartprod {...cartprod} />;
+            })}
+          </div>
+          <div className="login-three1">
+            <button onClick={productviewPage} className="forsignin-btn">
+              Add Items
+              <p style={{ marginTop: 100 }}>
+                {" "}
+                YOUR BAG IS EMPTY. Once you add something to your bag, it will
+                appear here. Ready to get started?
+              </p>
+            </button>
           </div>
         </div>
-
-        <div>
-          {cartProducts.map((cartprod) => {
-            return <Cartprod {...cartprod} />;
-          })}
-        </div>
-        <div className="login-three">
-          <button onClick={productviewPage} className="forsignin-btn">
-          Add Items
-          <p> YOUR BAG IS EMPTY. Once you add something to your bag, it will appear here. Ready to get started?
-</p>
-          </button>
-        </div>
-      </div>
         // <div className="emptycart">
         //   Oops, your Cart Is Empty......
         //   <div className="add-prod">

@@ -38,9 +38,10 @@
 
 }
 .mainImage{
+    margin-top:12vw;
     width:50vw;
+    border-radius: 10px;
     height: 40vh;
-    margin-top:100
 
 }
 
@@ -89,14 +90,7 @@
 
 
 
-.login-one,.login-two,.login-three {
-    height: 32%;
-    display: flex;
-    color: white;
-    align-items: center;
-    justify-content: center;
-    
-}
+
 
 .foremail,.foremailinp,.forpassword,.forpass,.forsignin-btn{
     font-size: 24px;

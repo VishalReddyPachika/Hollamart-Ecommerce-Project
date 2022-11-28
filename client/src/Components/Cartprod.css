@@ -49,19 +49,18 @@
 .alertheader{
     color: red;
     font-size: 24px;
-    font-weight:600;
-    border: 1px solid red;
     width: 50%;
     display: flex;
     justify-content: center;
     margin: auto;    
+    
 }
 
 .proceed-btn{
     width: 50%;
     font-size: 28px;
-    background-color: blue;
-    color: white;
+    background-color: #FFD800;
+    color: black;
 }
 
 .suretocancel{

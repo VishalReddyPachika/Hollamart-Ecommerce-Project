@@ -140,20 +140,15 @@ function Cartlist() {
                 Products
               </div>
             </div>
-        <div  className="faCartShoppingIcon">
-        <FontAwesomeIcon
-              icon={faSignOut}
-              size="3x"
-              onClick={logoutUser}
-              className="faSignOut"
-            />
+            <div className="faCartShoppingIcon">
+              <FontAwesomeIcon
+                icon={faSignOut}
+                size="3x"
+                onClick={logoutUser}
+                className="faSignOut"
+              />
+            </div>
           </div>
-
-           
-
-
-          </div>
-
 
           <div className="parent-address">
             <div className="address">
@@ -198,7 +193,11 @@ function Cartlist() {
             {home == null || home == "" ? (
               <div>please select an address to deliver</div>
             ) : (
-              <button className="forhandlingaddress">Place Order</button>
+              <div className="placeorder">
+                <button onClick={productviewPage} className="forsignin-btn">
+                  Place Order
+                </button>
+              </div>
             )}
           </div>
           {show && (

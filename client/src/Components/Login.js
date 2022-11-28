@@ -61,7 +61,7 @@ function Login() {
   };
 
   const landingPage = () => {
-    window.location.href = "/searchbar";
+    window.location.href = "/";
   };
   const images = [
     {
@@ -103,7 +103,7 @@ function Login() {
       <div className="slider">
         <SimpleImageSlider
           width={windowWidth * 0.8}
-          height={windowHeight * 0.6}
+          height={windowHeight * 0.5}
           images={images}
           showBullets={true}
           showNavs={true}
@@ -111,13 +111,14 @@ function Login() {
         />
       </div>
 
-      <div
+      {/* <div
         style={{
           marginTop: windowHeight * 0.24,
           alignContent: "center",
           alignItems: "center",
           alignSelf: "center",
         }}
+        className="mainImage"
       >
         <SimpleImageSlider
           width={windowWidth * 0.7}
@@ -127,20 +128,21 @@ function Login() {
           showNavs={true}
           style={myStyles.inputField}
         />
-      </div>
+      </div> */}
 
       <div>
         <img
           src={
-            "https://www.shopivo.com/blog/wp-content/uploads/2019/11/Black-Friday-Sales-Plan-Header.png"
+            "https://media.cnn.com/api/v1/images/stellar/prod/221127083329-underscored-cm-lead-img-early-deals-jpg.jpg?c=16x9&q=h_720,w_1280,c_fill"
           }
           className="mainImage"
         />
         <img
           src={
-            "https://www.shopivo.com/blog/wp-content/uploads/2019/11/Black-Friday-Sales-Plan-Header.png"
+            "https://image.winudf.com/v2/image/Y29tLndhbGxwYXBlcnNob2VzZGVzaWduLnRjc3N0dWRpb19zY3JlZW5fM18xNTIyNjU4MzY0XzAxOA/screen-3.jpg?fakeurl=1&type=.webp"
           }
           className="mainImage"
+          style={{ marginTop: windowHeight * 0.05 }}
         />
       </div>
       <div className="second-part">
